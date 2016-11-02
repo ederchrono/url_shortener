@@ -35,7 +35,12 @@ class URLShortenerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'url' => 'required',
+        ]);
+
+
+        echo Url::shortenURL($request->get('url'));
     }
 
     /**
