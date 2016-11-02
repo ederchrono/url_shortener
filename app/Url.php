@@ -19,4 +19,9 @@ class Url extends Model
     {
         return "http://edr.com/".$this->hash;
     }
+
+    public function stats()
+    {
+        return $this->hasMany('App\Stats');
+    }
 }

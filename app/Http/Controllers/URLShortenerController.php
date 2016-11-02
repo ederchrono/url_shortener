@@ -68,7 +68,11 @@ class URLShortenerController extends Controller
      */
     public function show($id)
     {
-        return Url::where('hash',$id)->first();
+        $url = Url::with('stats')->where('hash',$id)->first();
+        if(!$url)
+            return view('welcome',['error'=>'URL not found.']);
+
+        return view('stats',['url'=>$url]);
     }
 
     /**
