@@ -21,7 +21,8 @@ class RedirectController extends Controller
         $hit = new Stats;
         $hit->url_id = $url->id;
         $hit->user_id = 0;//anonymous user
-
+        $hit->save();
+        
         return view('redirect',['url'=>$url]);
     }
 }

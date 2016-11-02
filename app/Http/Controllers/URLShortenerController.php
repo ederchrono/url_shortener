@@ -20,16 +20,6 @@ class URLShortenerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -47,25 +37,27 @@ class URLShortenerController extends Controller
 
         if(!$url)
         {
+            //generating url
             $url = new Url;
             $url->long = $long_url;
-            $url->hash = "provisional_hash_".rand(0,99999);
             $url->hits = 0;
-            //saving to get id to hash
+
+            $urlHash = Url::generateHash( rand() );
+            
+            //regenerate hash nif it already exists
+            while(Url::where('hash', $urlHash)->first())
+            {
+                $urlHash = Url::generateHash( rand() );
+            }
+            
+            $url->hash = Url::generateHash( rand() );
             $url->save();
 
-            //hash generation
-            $url->hash = Url::generateHash($url->id);
-            $url->save();
-
-            echo $url->getShortURL();
 
         }
-        else
-        {
 
-            echo $url->getShortURL();
-        }
+        echo $url->getShortURL();
+
     }
 
     /**
@@ -99,7 +91,18 @@ class URLShortenerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'url' => 'required|active_url',
+        ]);
+
+        $url = Url::where('hash',$id)->first();
+
+        if(!$url)
+            return json_encode(['ok'=>false, 'message'=>'URL not found.']);
+
+        $url->long = $request->get('url');
+        return json_encode(['ok'=>true]);
+
     }
 
     /**
@@ -110,6 +113,13 @@ class URLShortenerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $url = Url::where('hash',$id)->first();
+
+        if(!$url)
+            return json_encode(['ok'=>false, 'message'=>'URL not found.']);
+
+        $url->delete();
+
+        return json_encode(['ok'=>true]);
     }
 }

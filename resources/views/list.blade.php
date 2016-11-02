@@ -21,7 +21,7 @@
                                     {{$url->long}}
                                 </td>
                                 <td>
-                                    {{$url->hash}}
+                                    <a href="{!! url($url->hash) !!}">{{$url->hash}}</a>
                                 </td>
                                 <td>
                                     {{$url->hits}}
