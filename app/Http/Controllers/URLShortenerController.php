@@ -14,7 +14,9 @@ class URLShortenerController extends Controller
      */
     public function index()
     {
-        return Url::all();
+
+        return view('list',['urls'=>Url::all()]);
+
     }
 
     /**
