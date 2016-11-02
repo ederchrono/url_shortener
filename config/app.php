@@ -180,6 +180,8 @@ return [
 
 
         Collective\Html\HtmlServiceProvider::class,
+
+        Vinkla\Hashids\HashidsServiceProvider::class
     ],
 
     /*
@@ -230,6 +232,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class
     ],
 
 ];
