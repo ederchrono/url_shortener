@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Url;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class URLShortenerController extends Controller
 {
@@ -58,6 +60,7 @@ class URLShortenerController extends Controller
 
         echo $url->getShortURL();
 
+
     }
 
     /**
@@ -71,6 +74,12 @@ class URLShortenerController extends Controller
         $url = Url::with('stats')->where('hash',$id)->first();
         if(!$url)
             return view('welcome',['error'=>'URL not found.']);
+
+        $timezone = Config::get('app.timezone');
+
+        $url->created_at= Carbon::createFromTimestamp(strtotime($url->created_at))
+            ->timezone($timezone)
+            ->toDateTimeString();
 
         return view('stats',['url'=>$url]);
     }
