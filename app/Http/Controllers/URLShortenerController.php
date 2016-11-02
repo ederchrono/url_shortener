@@ -74,7 +74,7 @@ class URLShortenerController extends Controller
      */
     public function show($id)
     {
-        //
+        return Url::where('hash',$id)->first();
     }
 
     /**
