@@ -10,9 +10,13 @@ class Url extends Model
 {
     //
 
-    public static function shortenURL($long_url)
+    public static function generateHash($id)
     {
-        
-        return "http://edr.com/".Hashids::encode(rand(0,100));
+        return Hashids::encode($id);
+    }
+    
+    public function getShortURL()
+    {
+        return "http://edr.com/".$this->hash;
     }
 }

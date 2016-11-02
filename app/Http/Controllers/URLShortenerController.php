@@ -39,8 +39,31 @@ class URLShortenerController extends Controller
             'url' => 'required|active_url',
         ]);
 
+        $long_url = $request->get('url');
 
-        echo Url::shortenURL($request->get('url'));
+        $url = Url::where('long', $long_url)->first();
+
+        if(!$url)
+        {
+            $url = new Url;
+            $url->long = $long_url;
+            $url->hash = "provisional_hash_".rand(0,99999);
+            $url->hits = 0;
+            //saving to get id to hash
+            $url->save();
+
+            //hash generation
+            $url->hash = Url::generateHash($url->id);
+            $url->save();
+
+            echo $url->getShortURL();
+
+        }
+        else
+        {
+
+            echo $url->getShortURL();
+        }
     }
 
     /**
