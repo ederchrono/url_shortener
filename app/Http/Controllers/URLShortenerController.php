@@ -20,16 +20,6 @@ class URLShortenerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -101,7 +91,18 @@ class URLShortenerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'url' => 'required|active_url',
+        ]);
+
+        $url = Url::where('hash',$id)->first();
+
+        if(!$url)
+            return json_encode(['ok'=>false, 'message'=>'URL not found.']);
+
+        $url->long = $request->get('url');
+        return json_encode(['ok'=>true]);
+
     }
 
     /**
@@ -112,6 +113,13 @@ class URLShortenerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $url = Url::where('hash',$id)->first();
+
+        if(!$url)
+            return json_encode(['ok'=>false, 'message'=>'URL not found.']);
+
+        $url->delete();
+
+        return json_encode(['ok'=>true]);
     }
 }

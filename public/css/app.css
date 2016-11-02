@@ -5766,4 +5766,17 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+table {
+  width: 100%; }
+
+th {
+  height: 50px; }
+
+th, td {
+  padding: 15px;
+  text-align: left; }
+
+tr:nth-child(even) {
+  background-color: #f2f2f2; }
+
 /*# sourceMappingURL=app.css.map */
