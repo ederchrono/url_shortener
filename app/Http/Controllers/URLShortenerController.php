@@ -47,25 +47,27 @@ class URLShortenerController extends Controller
 
         if(!$url)
         {
+            //generating url
             $url = new Url;
             $url->long = $long_url;
-            $url->hash = "provisional_hash_".rand(0,99999);
             $url->hits = 0;
-            //saving to get id to hash
+
+            $urlHash = Url::generateHash( rand() );
+            
+            //regenerate hash nif it already exists
+            while(Url::where('hash', $urlHash)->first())
+            {
+                $urlHash = Url::generateHash( rand() );
+            }
+            
+            $url->hash = Url::generateHash( rand() );
             $url->save();
 
-            //hash generation
-            $url->hash = Url::generateHash($url->id);
-            $url->save();
-
-            echo $url->getShortURL();
 
         }
-        else
-        {
 
-            echo $url->getShortURL();
-        }
+        echo $url->getShortURL();
+
     }
 
     /**
