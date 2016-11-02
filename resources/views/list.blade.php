@@ -7,13 +7,29 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">URL list</div>
 
-                    <ul>
+                    <table>
+                        <tr>
+                            <th>URL</th>
+                            <th>hash</th>
+                            <th>hits</th>
+                        </tr>
+
+
                         @foreach($urls as $url)
-                            <li>
-                                {{$url->hash}}
-                            </li>
+                            <tr>
+                                <td>
+                                    {{$url->long}}
+                                </td>
+                                <td>
+                                    {{$url->hash}}
+                                </td>
+                                <td>
+                                    {{$url->hits}}
+                                </td>
+                            </tr>
                         @endforeach
-                    </ul>
+
+                    </table>
 
                 </div>
             </div>
