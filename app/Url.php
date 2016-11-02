@@ -12,6 +12,7 @@ class Url extends Model
 
     public static function shortenURL($long_url)
     {
+        
         return "http://edr.com/".Hashids::encode(rand(0,100));
     }
 }

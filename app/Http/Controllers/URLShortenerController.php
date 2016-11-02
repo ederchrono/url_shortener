@@ -36,7 +36,7 @@ class URLShortenerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'url' => 'required',
+            'url' => 'required|active_url',
         ]);
 
 
