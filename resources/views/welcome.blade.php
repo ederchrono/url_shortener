@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>URL Shortener</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -47,7 +47,7 @@
                 {{ Form::close() }}
 
                 @if (count($errors) > 0)
-                    <div class="alert alert-danger">
+                    <div class="errors">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
